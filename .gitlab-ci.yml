@@ -8,7 +8,7 @@ stages:
   - prod
 
 variables:                         &default-vars
-  REGISTRY_PATH:                   docker.io/paritytech
+  REGISTRY_PATH:                   docker.io/mangatasolutions
   REGISTRY_NAME:                   docker.io
 
 default:
@@ -30,7 +30,7 @@ default:
 
 # Push to Dockerhub using buildah
 .push_to_docker_hub:               &push_to_docker_hub
-  - export IMAGE_DATE_TAG="$CI_COMMIT_SHORT_SHA-$(date +%Y%m%d)"
+  - export IMAGE_DATE_TAG="$CI_COMMIT_SHORT_SHA-$(date +%Y%m%d)D"
   - buildah version
   - buildah bud
       --format=docker

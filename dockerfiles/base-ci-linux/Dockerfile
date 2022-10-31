@@ -2,7 +2,7 @@ FROM docker.io/library/debian:buster-slim
 
 ARG VCS_REF=master
 ARG BUILD_DATE=""
-ARG REGISTRY_PATH=docker.io/paritytech
+ARG REGISTRY_PATH=docker.io/mangatasolutions
 
 # those can be removed once jq is available through the distribution
 ARG JQ_CHECKSUM=af986793a515d500ab2d35f8d2aecd656e764504b789b66d7e1a0b727a124c44
@@ -11,14 +11,14 @@ ARG JQ_PATH=/bin/jq
 # metadata
 LABEL summary="Layer 1 image with all dependencies for Rust and WASM compilation." \
 	name="${REGISTRY_PATH}/base-ci-linux" \
-	maintainer="devops-team@parity.io" \
+	maintainer="marian.vanderka@mangata.finance" \
 	version="1.0" \
 	description="libssl-dev, clang, libclang-dev, lld, cmake, make, git, pkg-config \
 curl, time, jq, lsof, rhash, rust stable, rust nightly, sccache" \
 	io.parity.image.vendor="Parity Technologies" \
-	io.parity.image.source="https://github.com/paritytech/scripts/blob/${VCS_REF}/\
+	io.parity.image.source="https://github.com/mangata-finance/paritytech-scripts/blob/${VCS_REF}/\
 dockerfiles/base-ci-linux/Dockerfile" \
-	io.parity.image.documentation="https://github.com/paritytech/scripts/blob/${VCS_REF}/\
+	io.parity.image.documentation="https://github.com/mangata-finance/paritytech/scripts/blob/${VCS_REF}/\
 dockerfiles/base-ci-linux/README.md" \
 	io.parity.image.revision="${VCS_REF}" \
 	io.parity.image.created="${BUILD_DATE}"
@@ -58,12 +58,12 @@ RUN set -eux; \
   echo "$JQ_CHECKSUM $JQ_PATH" | sha256sum --check && \
   jq --version; \
 # install minio client
-  curl -L "https://dl.min.io/client/mc/release/linux-amd64/mc" -o /usr/local/bin/mc && \
+  curl -L "https://dl.min.io/client/mc/release/linux-arm64/mc" -o /usr/local/bin/mc && \
   chmod 755 /usr/local/bin/mc && \
 # set a link to clang
 	update-alternatives --install /usr/bin/cc cc /usr/bin/clang-13 100; \
 # install rustup, use minimum components
-	curl -L "https://static.rust-lang.org/rustup/dist/x86_64-unknown-linux-gnu/rustup-init" \
+	curl -L "https://static.rust-lang.org/rustup/dist/aarch64-unknown-linux-gnu/rustup-init" \
 		-o rustup-init; \
   	chmod +x rustup-init; \
   	./rustup-init -y --no-modify-path --profile minimal --default-toolchain stable; \

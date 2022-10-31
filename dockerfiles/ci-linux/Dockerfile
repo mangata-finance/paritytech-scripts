@@ -1,18 +1,18 @@
 ARG VCS_REF=master
 ARG BUILD_DATE=""
-ARG REGISTRY_PATH=docker.io/paritytech
+ARG REGISTRY_PATH=docker.io/mangatasolutions
 
 FROM ${REGISTRY_PATH}/base-ci-linux:latest
 
 # metadata
 LABEL summary="Image for Substrate-based projects." \
 	name="${REGISTRY_PATH}/ci-linux" \
-	maintainer="devops-team@parity.io" \
+	maintainer="marian.vanderka@mangata.finance" \
 	version="1.0" \
 	description="Inherits from base-ci-linux; wasm-gc, wasm-bindgen-cli, wasm-pack, cargo-audit, cargo-web, cargo-deny" \
 	io.parity.image.vendor="Parity Technologies" \
-	io.parity.image.source="https://github.com/paritytech/scripts/blob/${VCS_REF}/dockerfiles/ci-linux/Dockerfile" \
-	io.parity.image.documentation="https://github.com/paritytech/scripts/blob/${VCS_REF}/dockerfiles/ci-linux/README.md" \
+        io.parity.image.source="https://github.com/mangata-finance/paritytech-scripts/blob/${VCS_REF}/dockerfiles/ci-linux/Dockerfile" \
+	io.parity.image.documentation="https://github.com/mangata-finance/paritytech-scripts/blob/${VCS_REF}/dockerfiles/ci-linux/README.md" \
 	io.parity.image.revision="${VCS_REF}" \
 	io.parity.image.created="${BUILD_DATE}"
 
@@ -23,7 +23,7 @@ RUN set -eux && \
 	# install specific Rust nightly, default is stable, use minimum components
 	rustup toolchain install nightly-2022-10-10 --profile minimal --component rustfmt clippy && \
 	# "alias" pinned nightly-2022-10-10 toolchain as nightly
-	ln -s /usr/local/rustup/toolchains/nightly-2022-10-10-x86_64-unknown-linux-gnu /usr/local/rustup/toolchains/nightly-x86_64-unknown-linux-gnu && \
+	ln -s /usr/local/rustup/toolchains/nightly-2022-10-10-aarch64-unknown-linux-gnu /usr/local/rustup/toolchains/nightly-aarch64-unknown-linux-gnu && \
 	# install wasm toolchain
 	rustup target add wasm32-unknown-unknown && \
 	rustup target add wasm32-unknown-unknown --toolchain nightly && \
